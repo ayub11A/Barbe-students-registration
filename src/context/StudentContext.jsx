@@ -14,6 +14,7 @@ export const StudentProvider = ({ children }) => {
     localStorage.setItem("students", JSON.stringify(students));
   }, [students]);
 
+  // Add new student
   const addStudent = (student) => {
     setStudents(prev => [
       ...prev,
@@ -21,8 +22,15 @@ export const StudentProvider = ({ children }) => {
     ]);
   };
 
+  // Remove student by index
+  const removeStudent = (index) => {
+    const updated = [...students];
+    updated.splice(index, 1);
+    setStudents(updated);
+  };
+
   return (
-    <StudentContext.Provider value={{ students, addStudent }}>
+    <StudentContext.Provider value={{ students, addStudent, removeStudent }}>
       {children}
     </StudentContext.Provider>
   );

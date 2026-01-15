@@ -11,9 +11,7 @@ function AdminLayout({ children }) {
           <Link to="/admin/dashboard" className="hover:bg-blue-800 p-2 rounded">
             Dashboard
           </Link>
-          <Link to="/student-registration" className="hover:bg-blue-800 p-2 rounded">
-            Students
-          </Link>
+         
           <Link to="/admin/AdminTeachers" className="hover:bg-blue-800 p-2 rounded">
             Teachers
           </Link>
