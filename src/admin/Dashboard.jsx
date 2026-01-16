@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import AdminLayout from "./AdminLayout";
 import { StudentContext } from "../context/StudentContext";
 import { TeacherContext } from "../context/TeacherContext";
@@ -13,11 +13,34 @@ function Dashboard() {
   const [showTeachers, setShowTeachers] = useState(false);
   const [showSubjects, setShowSubjects] = useState(false);
 
+  /* ===== TYPING ANIMATION ===== */
+  const fullText = `Feel free to track and customize your dashboard your way!
+Need help? Just drop me a message at mohamedamiin0488@gmail.com.
+Thanks for trusting me – here’s to your growing success! 🚀`;
+
+  const [displayedText, setDisplayedText] = useState("");
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (index < fullText.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText((prev) => prev + fullText[index]);
+        setIndex(index + 1);
+      }, 70); // <-- Slow motion typing, ka gaabis ah
+
+      return () => clearTimeout(timeout);
+    }
+  }, [index, fullText]);
+
   return (
     <AdminLayout>
-      <h1 className="text-3xl font-bold mb-6 text-blue-900">
-        Admin Dashboard
-      </h1>
+      <h1 className="text-3xl font-bold mb-6 text-blue-900">Admin Dashboard</h1>
+
+      {/* TYPING PARAGRAPH */}
+      <p className="text-gray-800 max-w-3xl mb-10 leading-relaxed">
+        {displayedText}
+        <span className="animate-pulse">|</span>
+      </p>
 
       {/* STATS CARDS */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">

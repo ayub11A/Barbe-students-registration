@@ -17,7 +17,7 @@ function Header() {
   return (
     <header className="w-full shadow">
       {/* Top Bar */}
-      <div className="bg-gray-600 mt-4 text-white text-sm py-2 px-4 flex justify-center items-center">
+      <div className="bg-gray-600 mt-2 text-white text-sm py-2 px-4 flex justify-center items-center">
         <span>
           Baarbe primary & seconcdary <sup>school</sup> .
         </span>

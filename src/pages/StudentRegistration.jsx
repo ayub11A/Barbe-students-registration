@@ -1,6 +1,26 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { StudentContext } from "../context/StudentContext";
+import { motion } from "framer-motion";
+
+/* ================= ANIMATION VARIANTS ================= */
+
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const field = {
+  hidden: { opacity: 0, y: 25 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: "easeOut" },
+  },
+};
 
 function StudentRegistration() {
   const { addStudent } = useContext(StudentContext);
@@ -10,7 +30,6 @@ function StudentRegistration() {
     name: "",
     age: "",
     gender: "",
-    grade: "",
     applyingFor: "",
     motherName: "",
     phone: "",
@@ -35,9 +54,16 @@ function StudentRegistration() {
     }
   };
 
-  // ✅ Certificate logic: ONLY Form One → Form Four
-  const certificateRequiredForms = ["Form One", "Form Two", "Form Three", "Form Four"];
-  const certificateRequired = certificateRequiredForms.includes(student.applyingFor);
+  /* CERTIFICATE REQUIRED ONLY FOR FORM ONE → FORM FOUR */
+  const certificateRequiredForms = [
+    "Form One",
+    "Form Two",
+    "Form Three",
+    "Form Four",
+  ];
+  const certificateRequired = certificateRequiredForms.includes(
+    student.applyingFor
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,15 +89,24 @@ function StudentRegistration() {
 
   return (
     <div className="bg-gray-100 min-h-screen flex justify-center items-center p-6">
-      <form
+      <motion.form
         onSubmit={handleSubmit}
+        variants={container}
+        initial="hidden"
+        animate="visible"
         className="bg-white w-full max-w-2xl p-8 rounded-xl shadow"
       >
-        <h1 className="text-3xl font-bold text-center text-blue-900 mb-6">
+        {/* TITLE */}
+        <motion.h1
+          variants={field}
+          className="text-3xl font-bold text-center text-blue-900 mb-6"
+        >
           Student Registration
-        </h1>
+        </motion.h1>
 
-        <input
+        {/* NAME */}
+        <motion.input
+          variants={field}
           type="text"
           name="name"
           placeholder="Student Full Name"
@@ -81,7 +116,9 @@ function StudentRegistration() {
           required
         />
 
-        <input
+        {/* AGE */}
+        <motion.input
+          variants={field}
           type="number"
           name="age"
           placeholder="Age"
@@ -91,7 +128,9 @@ function StudentRegistration() {
           required
         />
 
-        <select
+        {/* GENDER */}
+        <motion.select
+          variants={field}
           name="gender"
           value={student.gender}
           onChange={handleChange}
@@ -101,13 +140,11 @@ function StudentRegistration() {
           <option value="">Select Gender</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
-        </select>
-
-        {/* CURRENT CLASS */}
-      
+        </motion.select>
 
         {/* APPLYING FOR */}
-        <select
+        <motion.select
+          variants={field}
           name="applyingFor"
           value={student.applyingFor}
           onChange={handleChange}
@@ -127,9 +164,11 @@ function StudentRegistration() {
           <option value="Form Two">Form Two</option>
           <option value="Form Three">Form Three</option>
           <option value="Form Four">Form Four</option>
-        </select>
+        </motion.select>
 
-        <input
+        {/* MOTHER NAME */}
+        <motion.input
+          variants={field}
           type="text"
           name="motherName"
           placeholder="Mother's Name (Three Names)"
@@ -139,7 +178,9 @@ function StudentRegistration() {
           required
         />
 
-        <input
+        {/* PHONE */}
+        <motion.input
+          variants={field}
           type="tel"
           name="phone"
           placeholder="Parent Phone Number"
@@ -150,8 +191,8 @@ function StudentRegistration() {
         />
 
         {/* PHOTO */}
-        <div className="mb-4">
-          <label className="block font-semibold mb-1 text-green-400">
+        <motion.div variants={field} className="mb-4">
+          <label className="block font-semibold mb-1 text-green-600">
             Student Photo
           </label>
           <input
@@ -162,12 +203,17 @@ function StudentRegistration() {
             className="w-full p-2 border rounded"
             required
           />
-        </div>
+        </motion.div>
 
-        {/* CERTIFICATE ONLY FOR FORM ONE → FORM FOUR */}
+        {/* CERTIFICATE – ONLY FOR FORM */}
         {certificateRequired && (
-          <div className="mb-4">
-            <label className="block font-semibold mb-1 text-green-400">
+          <motion.div
+            variants={field}
+            initial="hidden"
+            animate="visible"
+            className="mb-4"
+          >
+            <label className="block font-semibold mb-1 text-green-600">
               Primary / Middle School Certificate
             </label>
             <input
@@ -178,13 +224,17 @@ function StudentRegistration() {
               className="w-full p-2 border rounded"
               required
             />
-          </div>
+          </motion.div>
         )}
 
-        <button className="w-full bg-blue-900 text-white py-3 rounded hover:bg-blue-800">
+        {/* SUBMIT */}
+        <motion.button
+          variants={field}
+          className="w-full bg-blue-900 text-white py-3 rounded hover:bg-blue-800 transition"
+        >
           Register Student
-        </button>
-      </form>
+        </motion.button>
+      </motion.form>
     </div>
   );
 }
